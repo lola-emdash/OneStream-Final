@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0B3057" />
+  <title>One Stream — Everything you love, in one place</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="#home" aria-label="One Stream home">One<span class="bolt">ϟ</span><span class="brand-blue">Stream</span></a>
+      <nav class="main-nav" aria-label="Main navigation">
+        <button class="nav-link active" data-page="home">Home</button>
+        <button class="nav-link" data-page="discover">Discover</button>
+        <button class="nav-link" data-page="watchlist">My Watchlist <span class="watch-count" id="watchCount">0</span></button>
+        <button class="nav-link" data-page="subscriptions">Subscriptions</button>
+        <button class="nav-link" data-page="profile">Profile</button>
+        <button class="nav-link" data-page="settings">Settings</button>
+      </nav>
+      <div class="top-actions">
+        <button class="icon-button search-shortcut" id="searchShortcut" aria-label="Go to search">⌕</button>
+        <button class="profile-button" id="profileButton" aria-label="Open profile">●</button>
+        <button class="menu-button" id="menuButton" aria-label="Open menu">☰</button>
+      </div>
+    </header>
+
+    <main>
+      <!-- HOME -->
+      <section class="page active" id="homePage">
+        <div class="hero">
+          <div class="hero-backdrop"></div>
+          <div class="hero-content">
+            <span class="eyebrow"><span class="live-dot"></span> YOUR ENTERTAINMENT, CONNECTED</span>
+            <h1>Watch <span>anything.</span><br>Anywhere, anytime.</h1>
+            <p>Discover your next favourite across the streaming platforms you already love.</p>
+            <div class="hero-actions">
+              <button class="primary-button" data-go="discover">Explore titles <span>→</span></button>
+              <button class="ghost-button" data-go="subscriptions">Connect your apps</button>
+            </div>
+          </div>
+          <div class="hero-note"><span class="note-line"></span> ONE PLACE. ENDLESS STORIES.</div>
+        </div>
+
+        <div class="content-section">
+          <div class="section-heading">
+            <div><span class="section-kicker">THE GOOD STUFF</span><h2>Popular right now</h2></div>
+            <button class="text-button" data-go="discover">Explore all <span>→</span></button>
+          </div>
+          <div class="poster-row" id="popularRow"></div>
+        </div>
+
+        <section class="benefits">
+          <div class="benefits-intro"><span class="section-kicker">WHY ONE STREAM?</span><h2>Less searching.<br><span>More watching.</span></h2><p>Your streaming world, brought together in one simple experience.</p></div>
+          <div class="benefit-card"><span class="benefit-icon">⌕</span><h3>Find it faster</h3><p>Search across your entertainment library without jumping between apps.</p></div>
+          <div class="benefit-card"><span class="benefit-icon">↗</span><h3>Your apps, together</h3><p>Keep the services you use organised in one convenient place.</p></div>
+          <div class="benefit-card"><span class="benefit-icon">♡</span><h3>Made for your taste</h3><p>Save titles and build a watchlist for your next movie night.</p></div>
+        </section>
+      </section>
+
+      <!-- DISCOVER -->
+      <section class="page" id="discoverPage">
+        <div class="page-heading">
+          <span class="section-kicker">YOUR NEXT FAVOURITE IS HERE</span>
+          <h1>Search & <span>discover.</span></h1>
+          <p>Find movies and series from across your favourite streaming services.</p>
+        </div>
+        <div class="search-panel">
+          <span class="search-symbol">⌕</span>
+          <input id="searchInput" type="search" placeholder="Search movies, TV shows, genres..." autocomplete="off" />
+          <button id="clearSearch" class="clear-search" aria-label="Clear search">×</button>
+        </div>
+        <div class="filter-block">
+          <div class="filter-line"><span class="filter-label">GENRES</span><div class="chip-list" id="genreFilters">
+            <button class="chip selected" data-genre="All">All</button><button class="chip" data-genre="Action">Action</button><button class="chip" data-genre="Drama">Drama</button><button class="chip" data-genre="Comedy">Comedy</button><button class="chip" data-genre="Thriller">Thriller</button><button class="chip" data-genre="Animation">Animation</button><button class="chip" data-genre="Adventure">Adventure</button>
+          </div></div>
+          <div class="filter-line"><span class="filter-label">PLATFORM</span><div class="chip-list" id="platformFilters">
+            <button class="chip selected" data-platform="All">All platforms</button><button class="chip" data-platform="Netflix">Netflix</button><button class="chip" data-platform="Prime Video">Prime Video</button><button class="chip" data-platform="Disney+">Disney+</button><button class="chip" data-platform="Showmax">Showmax</button><button class="chip" data-platform="HBO Max">HBO Max</button>
+          </div></div>
+        </div>
+        <div class="section-heading results-heading"><div><span class="section-kicker">HANDPICKED FOR YOUR NEXT BINGE</span><h2 id="resultsTitle">Explore titles</h2></div><span class="result-count" id="resultCount"></span></div>
+        <div class="movie-grid" id="discoverGrid"></div>
+        <div class="empty-state hidden" id="emptyState"><span>⌕</span><h3>No titles found</h3><p>Try another title, genre or streaming platform.</p><button class="secondary-button" id="resetFilters">Reset filters</button></div>
+      </section>
+
+      <!-- WATCHLIST -->
+      <section class="page" id="watchlistPage">
+        <div class="page-heading compact-heading"><span class="section-kicker">SAVED FOR LATER</span><h1>My <span>watchlist.</span></h1><p>All the titles you don't want to forget.</p></div>
+        <div class="movie-grid" id="watchlistGrid"></div>
+        <div class="empty-state" id="watchlistEmpty"><span>♡</span><h3>Your watchlist is waiting</h3><p>Save movies and series as you explore One Stream.</p><button class="primary-button" data-go="discover">Discover titles →</button></div>
+      </section>
+
+      <!-- SUBSCRIPTIONS -->
+      <section class="page" id="subscriptionsPage">
+        <div class="page-heading compact-heading"><span class="section-kicker">YOUR STREAMING WORLD</span><h1>Your <span>apps.</span></h1><p>Keep track of the services you use, all in one place.</p></div>
+        <div class="subscription-toolbar"><div class="chip-list" id="subscriptionFilters"><button class="chip selected" data-category="All">All</button><button class="chip" data-category="Entertainment">Entertainment</button><button class="chip" data-category="Sports">Sports</button><button class="chip" data-category="News">News</button><button class="chip" data-category="Education">Education</button></div><span class="result-count" id="appCount"></span></div>
+        <div class="subscription-grid" id="subscriptionGrid"></div>
+        <p class="disclaimer">Connecting an app here is a visual organiser only. Subscription billing and playback remain with each provider.</p>
+      </section>
+
+      <!-- PROFILE PAGE -->
+      <section class="page" id="profilePage">
+        <div class="account-page profile-page">
+          <div class="profile-edit"><button id="editProfileButton" aria-label="Edit profile">✎</button></div>
+          <div class="profile-main">
+            <img id="mainProfileAvatar" src="Image/eyo-avatar.jpg" alt="Eyo profile picture">
+            <h1 id="mainProfileName">Eyo</h1>
+            <p id="mainProfileEmail">Eyo@gmail.com</p>
+          </div>
+          <div class="profiles-strip" id="profilesStrip">
+            <button class="profile-choice selected" data-profile="Eyo"><img src="Image/eyo-avatar.jpg" alt=""><span>Eyo</span></button>
+            <button class="profile-choice" data-profile="John"><img src="Image/john-profile.jpg" alt=""><span>John</span></button>
+            <button class="profile-choice" data-profile="Steve"><img src="Image/steve-profile.jpg" alt=""><span>Steve</span></button>
+            <button class="profile-choice" data-profile="Doe"><img src="Image/doe-profile.jpg" alt=""><span>Doe</span></button>
+            <button class="profile-choice" data-profile="Jane"><img src="Image/jane-profile.jpg" alt=""><span>Jane</span></button>
+          </div>
+          <h2 class="manage-profiles-title">Manage Profiles</h2>
+          <div class="profile-options">
+            <button data-profile-action="subscriptions"><span class="profile-option-icon">◆</span><span>Subscriptions</span><span class="profile-option-arrow">→</span></button>
+            <button data-profile-action="settings"><span class="profile-option-icon">♟</span><span>Account Settings</span><span class="profile-option-arrow">→</span></button>
+            <button data-profile-action="help"><span class="profile-option-icon">?</span><span>Help</span><span class="profile-option-arrow">→</span></button>
+            <button data-profile-action="signout"><span class="profile-option-icon">⇥</span><span>Sign Out</span><span class="profile-option-arrow">→</span></button>
+          </div>
+        </div>
+      </section>
+
+      <!-- SETTINGS PAGE -->
+      <section class="page" id="settingsPage">
+        <div class="account-page settings-page">
+          <h1>Settings</h1>
+          <div class="settings-options">
+            <button class="settings-option" data-setting="profile">
+              <span class="settings-icon">♟</span><span class="settings-label">Profile</span>
+              <span class="settings-value" id="settingsProfileEmail">Eyo@gmail.com</span><span class="settings-arrow">→</span>
+            </button>
+            <button class="settings-option" data-setting="security"><span class="settings-icon">♙</span><span class="settings-label">Security and access</span><span class="settings-arrow">→</span></button>
+            <button class="settings-option" data-setting="app"><span class="settings-icon">⚙</span><span class="settings-label">App Settings</span><span class="settings-arrow">→</span></button>
+            <button class="settings-option" data-setting="plan"><span class="settings-icon">▤</span><span class="settings-label">Subscription plan</span><span class="settings-arrow">→</span></button>
+            <button class="settings-option" data-setting="notifications"><span class="settings-icon">♟</span><span class="settings-label">Notifications</span><span class="settings-arrow">→</span></button>
+            <button class="settings-option" data-setting="language"><span class="settings-icon">文</span><span class="settings-label">Language</span><span class="settings-arrow">→</span></button>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer><a class="brand footer-brand" href="#home">One<span class="bolt">ϟ</span><span class="brand-blue">Stream</span></a><span>Everything you love. One destination.</span><span>© 2026 One Stream</span></footer>
+  </div>
+
+  <!-- MOVIE DETAILS MODAL -->
+  <div class="modal-backdrop" id="movieModal" aria-hidden="true">
+    <div class="movie-modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <button class="modal-close" data-close="movieModal" aria-label="Close">×</button>
+      <div class="modal-art" id="modalArt"><div class="modal-shade"></div><div class="modal-copy"><span class="section-kicker" id="modalPlatform"></span><h2 id="modalTitle"></h2><p id="modalMeta"></p></div></div>
+      <div class="modal-body"><p id="modalDescription"></p><div class="modal-actions"><button class="primary-button" id="trailerButton">▶ Watch trailer</button><button class="secondary-button" id="modalWatchlist">＋ Add to watchlist</button></div><p class="modal-hint" id="modalHint">Playback opens through the selected streaming provider when available.</p></div>
+    </div>
+  </div>
+
+  <!-- SIGN IN MODAL -->
+  <div class="modal-backdrop" id="signInModal" aria-hidden="true">
+    <div class="sign-modal" role="dialog" aria-modal="true" aria-labelledby="signTitle">
+      <button class="modal-close" data-close="signInModal" aria-label="Close">×</button>
+      <a class="brand sign-brand" href="#home">One<span class="bolt">ϟ</span><span class="brand-blue">Stream</span></a>
+      <span class="section-kicker">WELCOME BACK</span><h2 id="signTitle">Sign in to your world.</h2>
+      <form id="signInForm"><label>Email address<input type="email" placeholder="you@example.com" required></label><label>Password<input type="password" placeholder="Enter your password" minlength="6" required></label><button class="primary-button full-button" type="submit">Sign in</button></form>
+      <p class="sign-foot">New to One Stream? <button id="switchToSignUp">Create an account</button></p>
+      <p class="form-message" id="formMessage" aria-live="polite"></p>
+    </div>
+  </div>
+  <div class="modal-backdrop" id="accountSettingsModal" aria-hidden="true">
+    <div class="sign-modal account-settings-modal" role="dialog" aria-modal="true">
+      <button class="modal-close" data-close="accountSettingsModal" aria-label="Close">×</button>
+      <span class="section-kicker">ONE STREAM</span>
+      <h2 id="accountModalTitle">Settings</h2>
+      <div id="accountModalContent"></div>
+    </div>
+  </div>
+  <div class="toast" id="toast" role="status"></div>
+  <script src="script.js"></script>
+</body>
+</html>
